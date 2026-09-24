@@ -1,0 +1,448 @@
+/* Reset and base styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* RBU academic palette */
+:root {
+  --rbu-blue: #104474;
+  --rbu-blue-dark: #0b3560;
+  --rbu-navy: #00173c;
+  --rbu-orange: #f36f27;
+  --rbu-orange-dark: #d85a16;
+  --bg: #f4f6f8;
+  --ink: #2b2b2b;
+  --muted: #5d6b7a;
+  --line: #e3e8ee;
+}
+
+body {
+  font-family: "Segoe UI", "Gill Sans", Verdana, sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  padding: 20px 20px 8px;
+  min-height: 100vh;
+}
+
+/* Subtle RBU watermark behind the content */
+body::after {
+  content: "RBU";
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 38vh;
+  font-weight: 800;
+  letter-spacing: 16px;
+  color: var(--rbu-blue);
+  opacity: 0.045;
+  z-index: 0;
+  pointer-events: none;
+  user-select: none;
+  line-height: 1;
+}
+
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+/* University header */
+.site-header {
+  background: #fff;
+  border-radius: 10px;
+  padding: 18px 24px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 8px rgba(0, 23, 60, 0.08);
+  border-top: 4px solid var(--rbu-blue);
+  border-bottom: 1px solid var(--rbu-orange);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.brand-logo {
+  height: 64px;
+  width: auto;
+  flex-shrink: 0;
+}
+
+.brand-text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  line-height: 1.25;
+}
+
+.uni-name {
+  font-size: 19px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: var(--rbu-blue);
+}
+
+.uni-city {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 6px;
+  color: var(--muted);
+}
+
+.app-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--rbu-navy);
+  margin-top: 6px;
+}
+
+.app-tagline {
+  font-size: 13px;
+  color: var(--rbu-orange);
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+/* Cards (forms / sections) */
+.card {
+  background: #fff;
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 8px rgba(0, 23, 60, 0.07);
+}
+
+.card h2 {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 14px;
+  color: var(--rbu-navy);
+  padding-left: 10px;
+  border-left: 4px solid var(--rbu-orange);
+}
+
+/* Forms */
+form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+input, select {
+  padding: 9px 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  font-size: 14px;
+  flex: 1 1 150px;
+  color: var(--ink);
+  background: #fff;
+}
+
+input:focus, select:focus {
+  outline: 2px solid rgba(16, 68, 116, 0.25);
+  border-color: var(--rbu-blue);
+}
+
+.field-hint {
+  font-size: 13px;
+  color: var(--muted);
+  margin-top: 8px;
+}
+
+/* Email field with static @rbunagpur.in suffix */
+.email-field {
+  display: flex;
+  align-items: center;
+  flex: 1 1 260px;
+  min-width: 0;
+}
+
+.email-field .email-local {
+  flex: 1 1 auto;
+  min-width: 0;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.email-domain {
+  flex-shrink: 0;
+  padding: 9px 12px;
+  background: #eef2f7;
+  border: 1px solid #cbd5e1;
+  border-left: none;
+  border-radius: 0 6px 6px 0;
+  font-size: 14px;
+  color: var(--rbu-blue);
+  font-weight: 600;
+}
+
+button {
+  padding: 9px 16px;
+  border: none;
+  border-radius: 6px;
+  background: var(--rbu-blue);
+  color: #fff;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: var(--rbu-blue-dark);
+}
+
+button.secondary {
+  background: #8a97ab;
+}
+
+button.secondary:hover {
+  background: #717f93;
+}
+
+button.danger {
+  background: #d64545;
+}
+
+button.danger:hover {
+  background: #b63636;
+}
+
+button.success {
+  background: #1f9d57;
+}
+
+button.success:hover {
+  background: #178749;
+}
+
+button.small {
+  padding: 6px 10px;
+  font-size: 12px;
+  border-radius: 5px;
+}
+
+/* Message banner */
+.message {
+  padding: 12px 16px;
+  border-radius: 6px;
+  margin-bottom: 20px;
+  font-size: 14px;
+}
+
+.message.success {
+  background: #d9f2e3;
+  color: #0f6b3a;
+  border: 1px solid #a8dfc0;
+}
+
+.message.error {
+  background: #fde5e3;
+  color: #a33120;
+  border: 1px solid #f6bfb8;
+}
+
+.hidden {
+  display: none;
+}
+
+.hint {
+  color: var(--muted);
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+/* Member autocomplete */
+.member-picker {
+  position: relative;
+  margin-top: 14px;
+}
+
+.member-picker label {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: var(--rbu-navy);
+}
+
+.suggestions {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  background: #fff;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  margin-top: 4px;
+  box-shadow: 0 4px 12px rgba(0, 23, 60, 0.18);
+  max-height: 320px;
+  overflow-y: auto;
+}
+
+.suggestion {
+  display: block;
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: none;
+  border-radius: 0;
+  padding: 10px 12px;
+  color: var(--ink);
+  font-size: 14px;
+  border-bottom: 1px solid var(--line);
+}
+
+.suggestion:hover,
+.suggestion:focus-visible {
+  background: #eef2f7;
+  outline: none;
+}
+
+.suggestion:last-child {
+  border-bottom: none;
+}
+
+.suggestion.none {
+  cursor: default;
+  color: var(--muted);
+}
+
+.suggestion-email {
+  display: block;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.selected-member {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+  padding: 10px 12px;
+  background: #e9eff7;
+  border: 1px solid #b9cfe4;
+  border-radius: 6px;
+  font-size: 14px;
+  color: var(--rbu-navy);
+}
+
+/* Tables */
+.table-wrap {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+th, td {
+  text-align: left;
+  padding: 10px;
+  border-bottom: 1px solid var(--line);
+  vertical-align: top;
+}
+
+th {
+  background: var(--rbu-blue);
+  color: #fff;
+  font-weight: 600;
+  letter-spacing: 0.4px;
+}
+
+tr:hover td {
+  background: #f6f9fc;
+}
+
+td.actions {
+  white-space: nowrap;
+}
+
+/* Book status badges (text + colour, never colour alone) */
+.badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+}
+
+.badge.available {
+  background: #d9f2e3;
+  color: #0f6b3a;
+  border: 1px solid #a8dfc0;
+}
+
+.badge.issued {
+  background: #fde9d8;
+  color: #b3540f;
+  border: 1px solid #f7c9a3;
+}
+
+.issued-to {
+  color: var(--rbu-blue);
+  font-weight: 600;
+}
+
+/* Footer */
+.site-footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 8px;
+  padding: 16px 20px;
+  background: var(--rbu-navy);
+  color: #fff;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.footer-monogram {
+  font-size: 34px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  color: var(--rbu-orange);
+  line-height: 1;
+}
+
+.site-footer h2 {
+  font-size: 16px;
+  color: #fff;
+  margin-bottom: 2px;
+}
+
+.site-footer p {
+  font-size: 13px;
+  color: #b9c6d8;
+}
+
+/* Responsive */
+@media (max-width: 700px) {
+  .brand {
+    flex-direction: column;
+    text-align: center;
+    gap: 8px;
+  }
+  .brand-text {
+    align-items: center;
+  }
+  form {
+    flex-direction: column;
+  }
+  input, select, button, .email-field {
+    flex: 1 1 auto;
+    width: 100%;
+  }
+}

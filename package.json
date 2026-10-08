@@ -1,0 +1,14 @@
+{
+  "name": "rbu-library-management-system",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Frontend tooling for the RBU Library Management System. Flask + SQLite remain the backend; this package.json only provides npm scripts for the HTML/CSS/JavaScript frontend.",
+  "scripts": {
+    "check": "node --check static/script.js && npm run format:check",
+    "format:check": "prettier --check \"static/**/*.{js,css}\" \"templates/**/*.html\"",
+    "format": "prettier --write \"static/**/*.{js,css}\" \"templates/**/*.html\""
+  },
+  "devDependencies": {
+    "prettier": "^3.6.2"
+  }
+}

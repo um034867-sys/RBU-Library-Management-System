@@ -25,8 +25,9 @@ A library management portal for **Ramdeobaba University, Nagpur**. Create member
 - CSS
 - Vanilla JavaScript
 - Fetch API
-- Python Flask
-- SQLite
+- Python Flask (backend)
+- SQLite (database)
+- Node.js/npm (frontend tooling only — checks and formatting)
 
 ## Project Structure
 
@@ -34,8 +35,13 @@ A library management portal for **Ramdeobaba University, Nagpur**. Create member
 RBU-library-management/
 ├── app.py               # Flask application + REST API + SQLite setup
 ├── seed_data.py         # optional demonstration data (idempotent)
-├── requirements.txt     # Python dependencies (Flask)
-├── .gitignore           # ignores library.db, caches, venvs, etc.
+├── requirements.txt     # Python dependencies (Flask, pytest)
+├── package.json         # Node.js/npm frontend tooling (formatting + checks)
+├── pytest.ini           # pytest configuration (tests/ + repo root on path)
+├── .gitignore           # ignores library.db, node_modules, caches, venvs, etc.
+├── tests/
+│   ├── conftest.py      # isolated temp SQLite database + client fixtures
+│   └── test_app.py      # automated tests for the Flask REST API
 ├── templates/
 │   └── index.html       # single-page frontend
 └── static/
@@ -48,15 +54,52 @@ RBU-library-management/
 ## Installation
 
 ```bash
-git clone <repository-url>
-cd RBU-library-management
+# 1. Python dependencies (Flask, pytest)
 python -m pip install -r requirements.txt
+
+# 2. Node.js frontend tooling (Prettier)
+npm install
+```
+
+Then start the application with:
+
+```bash
 python app.py
 ```
 
-Then open [http://127.0.0.1:5000](http://127.0.0.1:5000) in your browser.
+Open [http://127.0.0.1:5000](http://127.0.0.1:5000) in your browser.
 
 The `library.db` file is created automatically on first run.
+
+> Note: on some Windows setups `python` is a Microsoft Store alias. Use `py`
+> instead if `python` is not found (e.g. `py -m pip install -r requirements.txt`,
+> `py app.py`).
+
+## Frontend tooling (Node.js/npm)
+
+The Flask + SQLite backend is unchanged — npm is used **only** to lint/format
+the plain HTML/CSS/JavaScript frontend:
+
+| Command            | Purpose                                          |
+| ------------------ | ------------------------------------------------ |
+| `npm run check`    | JS syntax check + Prettier format check          |
+| `npm run format:check` | Verify frontend files match Prettier style   |
+| `npm run format`   | Reformat frontend files with Prettier (`--write`)|
+
+## Automated tests
+
+The test suite (`tests/`) exercises the real Flask REST API through Flask's
+test client. Every test uses a throwaway SQLite database in a temporary
+folder — your real `library.db` is never touched.
+
+```bash
+python -m pytest
+# or, if `python` is not on PATH:
+py -m pytest
+```
+
+Covered: the index page, add/list/search books, issue/return rules, delete,
+duplicate ISBN and required-field validation, and member handling.
 
 ## RBU Email
 

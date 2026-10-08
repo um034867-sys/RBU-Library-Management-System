@@ -1,126 +1,161 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>RBU Library Management System | Ramdeobaba University, Nagpur</title>
-  <link rel="stylesheet" href="/static/style.css">
-</head>
-<body>
-  <div class="container">
-    <!-- University header -->
-    <header class="site-header">
-      <div class="brand">
-        <img src="/static/img/rbu-logo.png" alt="Ramdeobaba University, Nagpur" class="brand-logo">
-        <div class="brand-text">
-          <span class="uni-name">RAMDEOBABA UNIVERSITY</span>
-          <span class="uni-city">NAGPUR</span>
-          <h1 class="app-title">Library Management System</h1>
-          <p class="app-tagline">Digital Library Portal</p>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>RBU Library Management System | Ramdeobaba University, Nagpur</title>
+    <link rel="stylesheet" href="/static/style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <!-- University header -->
+      <header class="site-header">
+        <div class="brand">
+          <img
+            src="/static/img/rbu-logo.png"
+            alt="Ramdeobaba University, Nagpur"
+            class="brand-logo"
+          />
+          <div class="brand-text">
+            <span class="uni-name">RAMDEOBABA UNIVERSITY</span>
+            <span class="uni-city">NAGPUR</span>
+            <h1 class="app-title">Library Management System</h1>
+            <p class="app-tagline">Digital Library Portal</p>
+          </div>
         </div>
-      </div>
-    </header>
+      </header>
 
-    <!-- Success / error messages -->
-    <div id="message" class="message hidden"></div>
+      <!-- Success / error messages -->
+      <div id="message" class="message hidden"></div>
 
-    <!-- Add Book form -->
-    <section class="card">
-      <h2>Add Book</h2>
-      <form id="addBookForm">
-        <input type="text" id="title" placeholder="Title" required>
-        <input type="text" id="author" placeholder="Author" required>
-        <input type="text" id="isbn" placeholder="ISBN" required>
-        <input type="text" id="category" placeholder="Category">
-        <button type="submit">Add Book</button>
-      </form>
-    </section>
+      <!-- Add Book form -->
+      <section class="card">
+        <h2>Add Book</h2>
+        <form id="addBookForm">
+          <input type="text" id="title" placeholder="Title" required />
+          <input type="text" id="author" placeholder="Author" required />
+          <input type="text" id="isbn" placeholder="ISBN" required />
+          <input type="text" id="category" placeholder="Category" />
+          <button type="submit">Add Book</button>
+        </form>
+      </section>
 
-    <!-- Members section -->
-    <section class="card">
-      <h2>Add Member</h2>
-      <form id="addMemberForm">
-        <input type="text" id="memberName" placeholder="Student name" required>
-        <div class="field email-field">
-          <input type="text" id="memberEmail" class="email-local" placeholder="studentname" autocomplete="off">
-          <span class="email-domain" id="emailDomainSuffix">@rbunagpur.in</span>
+      <!-- Members section -->
+      <section class="card">
+        <h2>Add Member</h2>
+        <form id="addMemberForm">
+          <input
+            type="text"
+            id="memberName"
+            placeholder="Student name"
+            required
+          />
+          <div class="field email-field">
+            <input
+              type="text"
+              id="memberEmail"
+              class="email-local"
+              placeholder="studentname"
+              autocomplete="off"
+            />
+            <span class="email-domain" id="emailDomainSuffix"
+              >@rbunagpur.in</span
+            >
+          </div>
+          <button type="submit">Add Member</button>
+        </form>
+        <p class="field-hint">
+          RBU student email of the form <strong>username@rbunagpur.in</strong>.
+          You only need to type your username, e.g. <em>rahul.sharma</em>.
+        </p>
+        <div class="member-picker">
+          <label for="memberSearch">Search member by name...</label>
+          <input
+            type="text"
+            id="memberSearch"
+            placeholder="Type a member name..."
+            autocomplete="off"
+          />
+          <div id="memberSuggestions" class="suggestions hidden"></div>
+          <div id="selectedMember" class="selected-member hidden">
+            <span id="selectedMemberLabel"></span>
+            <button
+              type="button"
+              id="clearSelectedMember"
+              class="small secondary"
+            >
+              Clear
+            </button>
+          </div>
         </div>
-        <button type="submit">Add Member</button>
-      </form>
-      <p class="field-hint">RBU student email of the form <strong>username@rbunagpur.in</strong>. You only need to type your username, e.g. <em>rahul.sharma</em>.</p>
-      <div class="member-picker">
-        <label for="memberSearch">Search member by name...</label>
-        <input type="text" id="memberSearch" placeholder="Type a member name..." autocomplete="off">
-        <div id="memberSuggestions" class="suggestions hidden"></div>
-        <div id="selectedMember" class="selected-member hidden">
-          <span id="selectedMemberLabel"></span>
-          <button type="button" id="clearSelectedMember" class="small secondary">Clear</button>
+      </section>
+
+      <!-- Members list -->
+      <section class="card">
+        <h2>Members</h2>
+        <p id="memberListMessage" class="hint"></p>
+        <div class="table-wrap">
+          <table class="members-table" id="memberTable">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="memberList"></tbody>
+          </table>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- Members list -->
-    <section class="card">
-      <h2>Members</h2>
-      <p id="memberListMessage" class="hint"></p>
-      <div class="table-wrap">
-        <table class="members-table" id="memberTable">
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody id="memberList"></tbody>
-        </table>
-      </div>
-    </section>
+      <!-- Search -->
+      <section class="card">
+        <h2>Search Books</h2>
+        <form id="searchForm">
+          <input
+            type="text"
+            id="searchInput"
+            placeholder="Search by title, author or ISBN..."
+          />
+          <button type="submit">Search</button>
+          <button type="button" id="clearSearch">Clear</button>
+        </form>
+      </section>
 
-    <!-- Search -->
-    <section class="card">
-      <h2>Search Books</h2>
-      <form id="searchForm">
-        <input type="text" id="searchInput" placeholder="Search by title, author or ISBN...">
-        <button type="submit">Search</button>
-        <button type="button" id="clearSearch">Clear</button>
-      </form>
-    </section>
+      <!-- Book list -->
+      <section class="card">
+        <h2>Books</h2>
+        <p id="listMessage" class="hint"></p>
+        <div class="table-wrap">
+          <table class="books-table" id="bookTable">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Title</th>
+                <th>Author</th>
+                <th>ISBN</th>
+                <th>Category</th>
+                <th>Status</th>
+                <th>Issued To</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="bookList"></tbody>
+          </table>
+        </div>
+      </section>
 
-    <!-- Book list -->
-    <section class="card">
-      <h2>Books</h2>
-      <p id="listMessage" class="hint"></p>
-      <div class="table-wrap">
-        <table class="books-table" id="bookTable">
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Title</th>
-              <th>Author</th>
-              <th>ISBN</th>
-              <th>Category</th>
-              <th>Status</th>
-              <th>Issued To</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody id="bookList"></tbody>
-        </table>
-      </div>
-    </section>
+      <!-- Library information footer -->
+      <footer class="site-footer">
+        <span class="footer-monogram" aria-hidden="true">RBU</span>
+        <div>
+          <h2>RBU Digital Library</h2>
+          <p>Library Management System for Ramdeobaba University, Nagpur</p>
+        </div>
+      </footer>
+    </div>
 
-    <!-- Library information footer -->
-    <footer class="site-footer">
-      <span class="footer-monogram" aria-hidden="true">RBU</span>
-      <div>
-        <h2>RBU Digital Library</h2>
-        <p>Library Management System for Ramdeobaba University, Nagpur</p>
-      </div>
-    </footer>
-  </div>
-
-  <script src="/static/script.js"></script>
-</body>
+    <script src="/static/script.js"></script>
+  </body>
 </html>

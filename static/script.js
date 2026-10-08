@@ -30,37 +30,61 @@ function renderBooks(books) {
   }
   listMessage.textContent = books.length + " book(s) found.";
 
-  list.innerHTML = books.map((book) => {
-    const status = book.available
-      ? '<span class="badge available">Available</span>'
-      : '<span class="badge issued">Issued</span>';
-    const issuedTo = book.issued_to_name
-      ? '<span class="issued-to">' + book.issued_to_name + "</span>"
-      : "-";
-    let actions = "";
-    if (book.available) {
-      actions += '<button class="small success" onclick="issueBook(' +
-        book.id + ')">Issue</button> ';
-    } else {
-      actions += '<button class="small secondary" onclick="returnBook(' +
-        book.id + ')">Return</button> ';
-    }
-    actions += '<button class="small danger" onclick="deleteBook(' +
-      book.id + ')">Delete</button>';
+  list.innerHTML = books
+    .map((book) => {
+      const status = book.available
+        ? '<span class="badge available">Available</span>'
+        : '<span class="badge issued">Issued</span>';
+      const issuedTo = book.issued_to_name
+        ? '<span class="issued-to">' + book.issued_to_name + "</span>"
+        : "-";
+      let actions = "";
+      if (book.available) {
+        actions +=
+          '<button class="small success" onclick="issueBook(' +
+          book.id +
+          ')">Issue</button> ';
+      } else {
+        actions +=
+          '<button class="small secondary" onclick="returnBook(' +
+          book.id +
+          ')">Return</button> ';
+      }
+      actions +=
+        '<button class="small danger" onclick="deleteBook(' +
+        book.id +
+        ')">Delete</button>';
 
-    return (
-      "<tr>" +
-      "<td>" + book.id + "</td>" +
-      "<td>" + escapeHtml(book.title) + "</td>" +
-      "<td>" + escapeHtml(book.author) + "</td>" +
-      "<td>" + escapeHtml(book.isbn) + "</td>" +
-      "<td>" + escapeHtml(book.category || "-") + "</td>" +
-      "<td>" + status + "</td>" +
-      "<td>" + issuedTo + "</td>" +
-      "<td class=\"actions\">" + actions + "</td>" +
-      "</tr>"
-    );
-  }).join("");
+      return (
+        "<tr>" +
+        "<td>" +
+        book.id +
+        "</td>" +
+        "<td>" +
+        escapeHtml(book.title) +
+        "</td>" +
+        "<td>" +
+        escapeHtml(book.author) +
+        "</td>" +
+        "<td>" +
+        escapeHtml(book.isbn) +
+        "</td>" +
+        "<td>" +
+        escapeHtml(book.category || "-") +
+        "</td>" +
+        "<td>" +
+        status +
+        "</td>" +
+        "<td>" +
+        issuedTo +
+        "</td>" +
+        '<td class="actions">' +
+        actions +
+        "</td>" +
+        "</tr>"
+      );
+    })
+    .join("");
 }
 
 function escapeHtml(text) {
@@ -91,18 +115,28 @@ function renderMembers(members) {
   }
   msg.textContent = members.length + " member(s).";
 
-  list.innerHTML = members.map((m) => {
-    return (
-      "<tr>" +
-      "<td>" + m.id + "</td>" +
-      "<td>" + escapeHtml(m.name) + "</td>" +
-      "<td>" + escapeHtml(m.email || "-") + "</td>" +
-      '<td class="actions">' +
-      '<button class="small danger" onclick="deleteMember(' + m.id + ')">Delete</button>' +
-      "</td>" +
-      "</tr>"
-    );
-  }).join("");
+  list.innerHTML = members
+    .map((m) => {
+      return (
+        "<tr>" +
+        "<td>" +
+        m.id +
+        "</td>" +
+        "<td>" +
+        escapeHtml(m.name) +
+        "</td>" +
+        "<td>" +
+        escapeHtml(m.email || "-") +
+        "</td>" +
+        '<td class="actions">' +
+        '<button class="small danger" onclick="deleteMember(' +
+        m.id +
+        ')">Delete</button>' +
+        "</td>" +
+        "</tr>"
+      );
+    })
+    .join("");
 }
 
 async function loadMembers() {
@@ -146,16 +180,26 @@ function showSuggestions() {
 function renderSuggestions(members) {
   memberResults = members;
   if (members.length === 0) {
-    suggestionsBox.innerHTML = '<div class="suggestion none">No members found</div>';
+    suggestionsBox.innerHTML =
+      '<div class="suggestion none">No members found</div>';
     showSuggestions();
     return;
   }
-  suggestionsBox.innerHTML = members.map((m) =>
-    '<button type="button" class="suggestion" onclick="selectMember(' + m.id + ')">' +
-    "<strong>" + escapeHtml(m.name) + "</strong>" +
-    (m.email ? '<span class="suggestion-email">' + escapeHtml(m.email) + "</span>" : "") +
-    "</button>"
-  ).join("");
+  suggestionsBox.innerHTML = members
+    .map(
+      (m) =>
+        '<button type="button" class="suggestion" onclick="selectMember(' +
+        m.id +
+        ')">' +
+        "<strong>" +
+        escapeHtml(m.name) +
+        "</strong>" +
+        (m.email
+          ? '<span class="suggestion-email">' + escapeHtml(m.email) + "</span>"
+          : "") +
+        "</button>",
+    )
+    .join("");
   showSuggestions();
 }
 
@@ -174,7 +218,8 @@ function selectMember(id) {
   if (!member) return;
   selectedMemberId = member.id;
   memberInput.value = member.name;
-  selectedMemberLabel.textContent = "Selected member: " + member.name + " (ID " + member.id + ")";
+  selectedMemberLabel.textContent =
+    "Selected member: " + member.name + " (ID " + member.id + ")";
   selectedBox.classList.remove("hidden");
   hideSuggestions();
 }
@@ -207,14 +252,18 @@ document.addEventListener("click", (e) => {
   }
 });
 
-document.getElementById("clearSelectedMember").addEventListener("click", clearSelectedMember);
+document
+  .getElementById("clearSelectedMember")
+  .addEventListener("click", clearSelectedMember);
 
 // ----- RBU email suffix hint -----
 const memberEmailInput = document.getElementById("memberEmail");
 const emailDomainSuffix = document.getElementById("emailDomainSuffix");
 
 function syncEmailSuffix() {
-  emailDomainSuffix.style.display = memberEmailInput.value.includes("@") ? "none" : "";
+  emailDomainSuffix.style.display = memberEmailInput.value.includes("@")
+    ? "none"
+    : "";
 }
 
 memberEmailInput.addEventListener("input", syncEmailSuffix);
@@ -226,13 +275,13 @@ document.getElementById("addBookForm").addEventListener("submit", async (e) => {
     title: document.getElementById("title").value,
     author: document.getElementById("author").value,
     isbn: document.getElementById("isbn").value,
-    category: document.getElementById("category").value
+    category: document.getElementById("category").value,
   };
   try {
     await api("/api/books", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload)
+      body: JSON.stringify(payload),
     });
     showMessage("Book added successfully", "success");
     document.getElementById("addBookForm").reset();
@@ -242,26 +291,31 @@ document.getElementById("addBookForm").addEventListener("submit", async (e) => {
   }
 });
 
-document.getElementById("addMemberForm").addEventListener("submit", async (e) => {
-  e.preventDefault();
-  const payload = {
-    name: document.getElementById("memberName").value,
-    email: document.getElementById("memberEmail").value
-  };
-  try {
-    const member = await api("/api/members", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload)
-    });
-    showMessage("Member added successfully (ID " + member.id + ")", "success");
-    document.getElementById("addMemberForm").reset();
-    syncEmailSuffix();
-    loadMembers();
-  } catch (err) {
-    showMessage(err.message, "error");
-  }
-});
+document
+  .getElementById("addMemberForm")
+  .addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const payload = {
+      name: document.getElementById("memberName").value,
+      email: document.getElementById("memberEmail").value,
+    };
+    try {
+      const member = await api("/api/members", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      showMessage(
+        "Member added successfully (ID " + member.id + ")",
+        "success",
+      );
+      document.getElementById("addMemberForm").reset();
+      syncEmailSuffix();
+      loadMembers();
+    } catch (err) {
+      showMessage(err.message, "error");
+    }
+  });
 
 document.getElementById("searchForm").addEventListener("submit", async (e) => {
   e.preventDefault();
@@ -288,7 +342,7 @@ async function issueBook(bookId) {
     const data = await api("/api/books/" + bookId + "/issue", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ member_id: selectedMemberId })
+      body: JSON.stringify({ member_id: selectedMemberId }),
     });
     showMessage(data.message, "success");
     refreshBooks();
@@ -299,7 +353,9 @@ async function issueBook(bookId) {
 
 async function returnBook(bookId) {
   try {
-    const data = await api("/api/books/" + bookId + "/return", { method: "POST" });
+    const data = await api("/api/books/" + bookId + "/return", {
+      method: "POST",
+    });
     showMessage(data.message, "success");
     refreshBooks();
   } catch (err) {
